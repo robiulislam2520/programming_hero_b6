@@ -8,6 +8,8 @@
       5. Performance
 I was use Elements, network,console tabs but don't know everything, today I will learn more and more in developers tools. Every programmer need to know developer tools, so i will start it with Jhankar Mahabub
 
+----
+
 ## 40.3 Console Tab
 আমরা যদি চায়, তাহলে কোন একটা function কে মনিটর করতে পারি, অথবা আমাদের website a যদি কোন event listener থাকে সেটাও monitor করতে পারি। 
 
@@ -22,3 +24,14 @@ I was use Elements, network,console tabs but don't know everything, today I will
 Google chrome devtools Console api নিয়ে যদি আরও জানতে চাও, তাহলে এই লিংক টা পরে নিও 
 
 ## [Google chrome console api](https://developer.chrome.com/docs/devtools/console/api/)
+
+---
+## 40.4 Source tab
+
+- If I wanna connect my vs code and google chrome, so I will set  **File system** inside of Source tab. 
+
+- I also done something more special, like event breakpoints, which events call, debug more and more, this source tab gave me more features.
+
+- Source tab have own snippet system, if i will make my own snippet, here I will do this.
+
+
