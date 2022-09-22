@@ -27,3 +27,45 @@ NPX ar age, amra npm use kortam akta create-react-app use korar jonnu, atai akta
 According to create-react-app website,
 they said, create-react-app is a **_Set up a modern web app by running one command._**
 It's means that we will use one command but running a huge production. This is a best CLI command all react developer.
+
+## 47.2 What is JSX?
+
+- Jsx is Javascript XML
+
+We are use javascript in html file and run js function or many others method.
+
+JSX is the very helpful for us, bcz we are write in HTMl but it gone JS. Babel work behind the scene.
+
+React all items create as a javascript document, so it nothing for you to convert it.
+
+**HTML**
+
+        function Component(){
+            return(
+                <>
+                    <h1 className="greeting">
+                        Hello, world!
+                    </h1>
+                    <div className="div" name={name} age='32'>
+                        <p>Paragraph</p>
+                    </div>
+                </>
+            )
+    }
+
+**Convert it react**
+
+        function Components() {
+            return
+            /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", {
+                className: "greeting"
+            }, "Hello, world!"),
+            /*#__PURE__*/React.createElement("div", {
+                className: "div",
+                name: name,
+                age: "32"
+            },
+            /*#__PURE__*/React.createElement("p", null, "Paragraph")));
+        }
+
+So, JSX is very beautiful and easy to understand.
