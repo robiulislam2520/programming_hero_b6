@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+
 *,
 html {
   margin: 0;
@@ -5,19 +7,21 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #f1f6f5;
+}
+
 ul li {
-  display: none;
+  list-style: none;
 }
 
 a {
   text-decoration: none;
 }
 
-body {
-  text-align: center;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.container {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
 }

@@ -1,13 +1,10 @@
-import Cart from "./components/Cart/Cart";
-import Cosmetics from "./components/Cosmetics/Cosmetics";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
-    <div className="App">
-      <h2>Hello world</h2>
-      <Cart/>
-      <Cosmetics/>
-    </div>
+    <>
+      <Header/>
+    </>
   );
 }
 
