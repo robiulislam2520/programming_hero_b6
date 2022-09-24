@@ -3,6 +3,7 @@
     grid-template-columns: 4fr 1fr;
     gap: 20px;
     padding: 50px 0;
+    position: relative;
 }
 
 .shop_container .products_container {
@@ -13,8 +14,13 @@
 
 .shop_container .cart_container {
     background-color: #FFE0B3;
-    height: 100%;
+    height: auto;
     padding: 28px 16px;
+    content: "";
+    position: absolute;
+    top: 50px;
+    right: 0;
+    border-radius: 5px;
 }
 
 .shop_container .cart_container h4 {

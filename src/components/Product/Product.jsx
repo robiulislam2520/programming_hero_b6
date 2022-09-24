@@ -1,6 +1,6 @@
 import "./Product.css";
 
-export default function Product({ product }) {
+export default function Product({ product, handleAddToCart }) {
   const { name, img, price, ratings, seller } = product;
 
   return (
@@ -16,7 +16,9 @@ export default function Product({ product }) {
         <p>Manufactured by: {seller}</p>
         <p>Rating: {ratings} star</p>
       </div>
-      <button className="btn">Add To Cart</button>
+      <button className="btn" onClick={() => handleAddToCart(product)}>
+        Add To Cart
+      </button>
     </div>
   );
 }
