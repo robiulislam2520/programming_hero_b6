@@ -1,12 +1,8 @@
-import Header from "./components/Header/Header";
-import Layout from "./layout/Layout";
-
 function App() {
   return (
-    <>
-      <Header/>
-      <Layout/>
-    </>
+    <div className="App">
+      <h2>Hello world</h2>
+    </div>
   );
 }
 
