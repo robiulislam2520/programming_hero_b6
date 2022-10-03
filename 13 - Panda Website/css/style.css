@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-section {
+    background: #FEEAE9;
+}
+.slider_section{
+    background-color: #FEEAE9;
+}
+.carousel-control-next-icon{
+    font-size: 20px;
+}
