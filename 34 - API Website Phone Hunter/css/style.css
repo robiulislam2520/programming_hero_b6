@@ -1,0 +1,33 @@
+body {
+    background-color: #f1f5f6;
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.phone_hunter {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.col {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #fff;
+    padding: 16px 20px;
+}
+
+.card-img img {
+    max-width: 150px;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+.loader {
+    display: none;
+}
+
+.display_none {
+    display: none;
+}
