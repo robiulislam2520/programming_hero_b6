@@ -1,36 +1,23 @@
-# Module 52 - Simple react router example
+# Module 52.5 - React Router Simple Practice
 
-## React router version 6.4 is very complicated. When I learning it like version 5 or 6 is easy to understand and easy to use. My perspective is it.
+১. একটা CSS framework সিলেক্ট করো। যেটা দিয়ে আজকের প্রাকটিস করবে। সেটা হতে পারে react bootstrap বা হতে পারে tailwind। যেটাই ভালো মনে হোক সেটা দিয়ে শুরু করলেই হবে। কারণ আজকের টা প্রাকটিস। আজকে ভালো করে করলে। সামনে কাজে লাগবে।
 
-### When you want to nested route follow this code
+২. চেষ্টা করো দেখো। নিজে নিজে ওয়েবসাইট কে একটু Responsive করতে পারো কিনা।
 
-        import { createBrowserRouter, RouterProvider } from "react-router-dom";
-        import OurCeo from "./components/OurCeo";
-        import Layout from "./layout/Layout";
-        import About from "./pages/About";
-        import Home from "./pages/Home";
+৩. সিম্পল কয়েকটা রাউট বসিয়ে দাও। app.js এ গিয়ে। restaurant নামে একটা রাউট ইমপ্লিমেন্ট করে ফেলো।
 
-        function App() {
+৪. not found বা 404 পেইজ টা ইমপ্লিমেন্ট করে ফেলো।
 
-        const myRouter = createBrowserRouter([
-            {
-            path: '/',
-            element: <Layout/>,
-            children:[
-                {path: "/", element: <Home/>},
-                {path: '/home', element: <Home/>},
-                {path:'/about', element: <About/>},
-                {path: '/about/:ceo', element: <OurCeo/>}
-            ]
-            },
-        ])
+৫. মেইন url বা "/" এই রাউট ইমপ্লিমেন্ট করে ফেলো।
 
+৬. একটা header কম্পোনেন্ট বানাও। সেখানে কিছু Link দাও। যেগুলাতে ক্লিক করলে বিভিন্ন রাউট এ যাবে। দেখবে লিংক এ ক্লিক করলে যেন পেইজ রিলোড না হয়।
 
-        return (
-            <div className="App">
-            <RouterProvider router={myRouter}></RouterProvider>
-            </div>
-        );
-        }
+৭. restaurant পেইজে প্রত্যেকটা কার্ডে দুইটা ইভেন্ট হ্যান্ডলার যোগ করো। দুই রকমের। প্রথমটা জাস্ট Link দিয়ে। আরেকটা Link এর মধ্যে বাটন দিয়ে। এই দুইটা তে ক্লিক করলে সে ওই মেন্যু এর আইডি অনুসারে ডাইনামিক একটা url তৈরি করবে। এবং সেটাতে ক্লিক করলে সে সেই url এ চলে যাবে। যদিও এখনো সেই রাউট এ যাওয়ার কম্পোনেন্ট বানাও নাই। তাও এইটা করে ফেলো।
 
-        export default App;
+৮. এইবার আবার app.js এ গিয়ে রাউট প্যারামিটার ওয়ালা একটা রাউট ডিক্লেয়ার করে ফেলো। সেখানে mealdb নামে একটা রাউট প্যারামিটার দিয়ে রাউট ডিক্লেয়ার করো।
+
+৯. রাউট প্যারামিট ইউজ করার জন্য একটা কম্পোনেন্ট ডিক্লেয়ার করো। তারপর সেই রাউট এ গিয়ে রাউট প্যারামিট ডাইনামিকভাবে mealdb এর api কল করে সেই ডাটা ওয়েবসাইট এ দেখাও।
+
+১০. সবার লাস্টে। সব কার্ডে একটা করে বাটন যোগ করো। যেটাতে ক্লিক করলে useNavigate হুক ইউজ করে। অন্য রাউট এ যাবে।
+
+উপরের ১০ টা জিনিস একটু বুঝে প্রাকটিস করতে পারলে তোমার React রাউটার সম্পর্কে প্রাথমিক ধারণা হয়ে যাবে।

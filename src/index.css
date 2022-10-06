@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 *,
 html {
   margin: 0;
@@ -11,32 +15,4 @@ ul li {
 
 a {
   text-decoration: none;
-}
-
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  background-color: #eee;
-}
-
-.navbar a {
-  color: black;
-  font-weight: 500;
-  padding: 5px 15px;
-  transition: all 0.3s ease-in;
-}
-
-.navbar a:hover {
-  background-color: aquamarine;
-}
-
-/* Style friend component */
-.friend {
-  border: 2px solid peru;
-  border-radius: 10px;
-  margin: 20px;
-  padding: 15px;
 }
