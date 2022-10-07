@@ -1,0 +1,15 @@
+.order-products {
+    border: 1px solid #000;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.order-products img {
+    width: 120px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}

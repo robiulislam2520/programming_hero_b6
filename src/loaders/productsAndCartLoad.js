@@ -13,8 +13,9 @@ export const productsAndCartLoader = async () =>{
         if(addedCart){
             const qty = savedCart[id];
             addedCart.quantity = qty;
+            initialCart.push(addedCart)
         }
-        console.log(addedCart)
+        // console.log(addedCart)
     }
 
     return {products, initialCart};
