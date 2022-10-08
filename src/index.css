@@ -91,3 +91,20 @@ a {
   color: #fff;
   border-radius: 5px;
 }
+
+/* Cart style */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.item button {
+  padding: 3px 8px;
+  border: 0;
+  background-color: red;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+}
