@@ -1,4 +1,5 @@
 import Main from "../layouts/Main";
+import About from "../pages/About";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import Orders from "../pages/Orders";
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
                 path: '/orders',
                 element: <Orders/>
             },
+            {
+                path:'/about',
+                element: <About/>
+            }
         ]
     },
     {
