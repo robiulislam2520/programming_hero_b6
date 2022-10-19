@@ -1,11 +1,11 @@
-import Register from "./components/Register";
+import React from 'react';
 
-function App() {
+const App = () => {
   return (
-    <div className="container w-75 mx-auto mt-5">
-      <Register/>
+    <div>
+        <h1>Hello World!!!!!!!!!!!!</h1>
     </div>
-  );
+  )
 }
 
 export default App;
