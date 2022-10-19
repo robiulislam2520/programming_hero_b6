@@ -11,8 +11,8 @@ const Header = () => {
               <h1 className="text-3xl font-bold text-white">DailyUI</h1>
             </Link>
           </div>
-          <div class="nav_link">
-            <nav className="flex sm:justify-center space-x-4">
+          <div className="nav_link">
+            <nav className="flex sm:justify-center items-center space-x-4">
               {[
                 ["Home", "/home"],
                 ["About", "/about"],
@@ -30,6 +30,9 @@ const Header = () => {
                   {title}
                 </NavLink>
               ))}
+              <Link to="/login">
+                <button className="btn btn-primary ">Login</button>
+              </Link>
             </nav>
           </div>
         </div>
