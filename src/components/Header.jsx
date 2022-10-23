@@ -55,6 +55,11 @@ const Header = () => {
                * Button style
                *
                */}
+              {user?.displayName && (
+                <button className="border border-green-500 py-2 px-4 rounded font-semibold ml-3">
+                  {user?.displayName}
+                </button>
+              )}
               {user?.uid ? (
                 <button
                   className="bg-teal-500 py-2 px-4 rounded font-semibold text-white ml-3"

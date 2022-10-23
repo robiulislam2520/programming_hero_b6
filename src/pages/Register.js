@@ -1,9 +1,42 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookIcon from "../assets/images/icons/fb.png";
 import GoogleIcon from "../assets/images/icons/google.png";
+import { AuthContext } from "../contexts/UserContext";
 
 const Register = () => {
+
+  // Auth context
+  const {createUser, setUser , signInWithGoogle} = useContext(AuthContext);
+
+  // Navigate user 
+  const navigate = useNavigate();
+
+  // handleUser create
+  const handleRegisterUser = (email, password) =>{
+    createUser(email, password)
+    .then( result => {
+      const user = result.user;
+      setUser(user)
+      console.log(user);
+    })
+    .catch(err => console.log(err.message))
+  }
+
+  // Google Login
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+    .then(result => {
+      const user = result.user;
+      setUser(user);
+      navigate('/')
+    })
+    .catch(err => {
+      console.error(err.message)
+    })
+  }
+
+
   // Form handler
   const handleSubmit = (e) => {
     // disable auto reload form
@@ -13,7 +46,10 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log(password, email);
+    handleRegisterUser(password, email);
+    
+    form.email.value = '';
+    form.password.value = '';
   };
 
   return (
@@ -117,7 +153,7 @@ const Register = () => {
         <img src={FacebookIcon} alt="" className="w-[40px]" />
         <h3 className="text-2xl">Facebook login</h3>
       </button>
-      <button className="w-full border-[2px] rounded flex justify-around items-center py-2 mb-2">
+      <button className="w-full border-[2px] rounded flex justify-around items-center py-2 mb-2" onClick={handleGoogleLogin}>
         <img src={GoogleIcon} alt="" className="w-[40px]" />
         <h3 className="text-2xl">Google login</h3>
       </button>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookIcon from "../assets/images/icons/fb.png";
 import GoogleIcon from "../assets/images/icons/google.png";
 import { AuthContext } from "../contexts/UserContext";
@@ -7,14 +7,20 @@ import { AuthContext } from "../contexts/UserContext";
 
 const Login = () => {
 
+  // Auth Context use
   const {signInWithGoogle, setUser} = useContext(AuthContext)
 
+  // Navigate route or Redirect
+  const navigate = useNavigate();
+
+  // Google login
   const handleGoogleLogin = () => {
     signInWithGoogle()
     .then(result => {
       
       const user = result.user;
       setUser(user);
+      navigate('/')
     })
     .catch(err => {
       console.error(err.message)
