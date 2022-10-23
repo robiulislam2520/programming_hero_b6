@@ -55,9 +55,9 @@ const Header = () => {
                * Button style
                *
                */}
-              {user?.displayName && (
+              {user?.email && (
                 <button className="border border-green-500 py-2 px-4 rounded font-semibold ml-3">
-                  {user?.displayName}
+                  {user?.email}
                 </button>
               )}
               {user?.uid ? (

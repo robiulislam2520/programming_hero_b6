@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FacebookIcon from "../assets/images/icons/fb.png";
 import GoogleIcon from "../assets/images/icons/google.png";
 import { AuthContext } from "../contexts/UserContext";
@@ -11,17 +11,9 @@ const Register = () => {
 
   // Navigate user 
   const navigate = useNavigate();
+  const location = useLocation()
 
-  // handleUser create
-  const handleRegisterUser = (email, password) =>{
-    createUser(email, password)
-    .then( result => {
-      const user = result.user;
-      setUser(user)
-      console.log(user)
-    })
-    .catch(err => console.log(err.message))
-  }
+  const from = location.state?.from?.pathname || '/';
 
   // Google Login
   const handleGoogleLogin = () => {
@@ -29,7 +21,7 @@ const Register = () => {
     .then(result => {
       const user = result.user;
       setUser(user);
-      navigate('/')
+      navigate(from , {replace: true})
     })
     .catch(err => {
       console.error(err.message)
@@ -64,10 +56,13 @@ const Register = () => {
     .catch(err => console.log(err.message))
 
     // create a user by email and password
-    handleRegisterUser(email, password);
-
-    // navigate user 
-    navigate('/')
+      createUser(email, password)
+      .then( result => {
+        const user = result.user;
+        setUser(user)
+        navigate(from , {replace: true})
+      })
+      .catch(err => console.log(err.message))
     // form reset
     form.reset()
   };

@@ -4,32 +4,34 @@ import FacebookIcon from "../assets/images/icons/fb.png";
 import GoogleIcon from "../assets/images/icons/google.png";
 import { AuthContext } from "../contexts/UserContext";
 
-
 const Login = () => {
-
   // Auth Context use
-  const {signInWithGoogle, setUser, login} = useContext(AuthContext)
+  const { signInWithGoogle, setUser, login } = useContext(AuthContext);
 
   // Navigate route or Redirect
   const navigate = useNavigate();
   const location = useLocation();
 
+  const from = location.state?.from?.pathname || "/";
+
+  console.log(from)
+
   // Google login
   const handleGoogleLogin = () => {
     signInWithGoogle()
-    .then(result => {
-      
-      const user = result.user;
-      setUser(user);
-      navigate(location.state?.from?.pathname)
-    })
-    .catch(err => {
-      console.error(err.message)
-    })
-  }
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        // navigate user
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  };
 
   // Form handler
-  const handleSubmit = e =>{
+  const handleSubmit = (e) => {
     // disable auto reload form
     e.preventDefault();
 
@@ -39,15 +41,16 @@ const Login = () => {
 
     // login user by email and password
     login(email, password)
-    
-    // navigate user
-    navigate('/')
+    .then((result) => {
+        const user = result.user;
+        setUser(user);
+        navigate(from, { replace: true });
+    })
+    .catch(err => console.log(err.message))
 
-    form.reset()
+    form.reset();
+  };
 
-  }
-
-  
   return (
     <div className="w-1/2 mx-auto border p-8 bg-white mt-12 rounded shadow">
       <h2 className="text-4xl font-semibold text-black text-center">Login</h2>
@@ -102,7 +105,10 @@ const Login = () => {
 
       <div className="mb-8 text-center">
         <p>
-        Don't Have any Account? <Link to='/register' className="text-blue-600 underline">Create New Account</Link>
+          Don't Have any Account?{" "}
+          <Link to="/register" className="text-blue-600 underline">
+            Create New Account
+          </Link>
         </p>
       </div>
 
@@ -110,7 +116,10 @@ const Login = () => {
         <img src={FacebookIcon} alt="" className="w-[40px]" />
         <h3 className="text-2xl">Facebook login</h3>
       </button>
-      <button className="w-full border-[2px] rounded flex justify-around items-center py-2 mb-2" onClick={handleGoogleLogin}>
+      <button
+        className="w-full border-[2px] rounded flex justify-around items-center py-2 mb-2"
+        onClick={handleGoogleLogin}
+      >
         <img src={GoogleIcon} alt="" className="w-[40px]" />
         <h3 className="text-2xl">Google login</h3>
       </button>
