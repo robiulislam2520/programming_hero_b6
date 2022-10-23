@@ -7,7 +7,7 @@ import { AuthContext } from "../contexts/UserContext";
 const Register = () => {
 
   // Auth context
-  const {createUser, setUser , signInWithGoogle} = useContext(AuthContext);
+  const {createUser, setUser , signInWithGoogle , updateUser} = useContext(AuthContext);
 
   // Navigate user 
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Register = () => {
     .then( result => {
       const user = result.user;
       setUser(user)
-      console.log(user);
+      console.log(user)
     })
     .catch(err => console.log(err.message))
   }
@@ -43,13 +43,33 @@ const Register = () => {
     e.preventDefault();
 
     const form = e.target;
+    const name = form.name.value;
+    const photoUrl = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
 
-    handleRegisterUser(password, email);
-    
-    form.email.value = '';
-    form.password.value = '';
+    if(password !== confirmPassword){
+      return alert('Password mismatch')
+    }
+
+    const profile = {
+      displayName: name,
+      photoURL: photoUrl
+    }
+
+    // Update user
+    updateUser(profile)
+    .then(() => alert('User Update'))
+    .catch(err => console.log(err.message))
+
+    // create a user by email and password
+    handleRegisterUser(email, password);
+
+    // navigate user 
+    navigate('/')
+    // form reset
+    form.reset()
   };
 
   return (
@@ -114,7 +134,7 @@ const Register = () => {
           </label>
           <input
             type="password"
-            name="confirm-password"
+            name="confirmPassword"
             id="confirm-password"
             required
             placeholder="****"

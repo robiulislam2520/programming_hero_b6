@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FacebookIcon from "../assets/images/icons/fb.png";
 import GoogleIcon from "../assets/images/icons/google.png";
 import { AuthContext } from "../contexts/UserContext";
@@ -8,10 +8,11 @@ import { AuthContext } from "../contexts/UserContext";
 const Login = () => {
 
   // Auth Context use
-  const {signInWithGoogle, setUser} = useContext(AuthContext)
+  const {signInWithGoogle, setUser, login} = useContext(AuthContext)
 
   // Navigate route or Redirect
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Google login
   const handleGoogleLogin = () => {
@@ -20,7 +21,7 @@ const Login = () => {
       
       const user = result.user;
       setUser(user);
-      navigate('/')
+      navigate(location.state?.from?.pathname)
     })
     .catch(err => {
       console.error(err.message)
@@ -36,7 +37,13 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log(password, email)
+    // login user by email and password
+    login(email, password)
+    
+    // navigate user
+    navigate('/')
+
+    form.reset()
 
   }
 
