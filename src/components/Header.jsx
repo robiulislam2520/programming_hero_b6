@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../contexts/UserContext";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   return (
     <header className="bg-white py-3 shadow">
       <div className="container mx-auto">
@@ -44,9 +55,18 @@ const Header = () => {
                * Button style
                *
                */}
-              <button className="bg-red-500 py-2 px-4 rounded font-semibold text-white ml-3">
-                <Link to="/login">Login</Link>
-              </button>
+              {user?.uid ? (
+                <button
+                  className="bg-teal-500 py-2 px-4 rounded font-semibold text-white ml-3"
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </button>
+              ) : (
+                <button className="bg-red-500 py-2 px-4 rounded font-semibold text-white ml-3">
+                  <Link to="/login">Login</Link>
+                </button>
+              )}
             </nav>
           </div>
         </div>

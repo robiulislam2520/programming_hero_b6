@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import FacebookIcon from "../assets/images/icons/fb.png";
 import GoogleIcon from "../assets/images/icons/google.png";
+import { AuthContext } from "../contexts/UserContext";
+
 
 const Login = () => {
+
+  const {signInWithGoogle, setUser} = useContext(AuthContext)
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+    .then(result => {
+      
+      const user = result.user;
+      setUser(user);
+    })
+    .catch(err => {
+      console.error(err.message)
+    })
+  }
 
   // Form handler
   const handleSubmit = e =>{
@@ -81,7 +97,7 @@ const Login = () => {
         <img src={FacebookIcon} alt="" className="w-[40px]" />
         <h3 className="text-2xl">Facebook login</h3>
       </button>
-      <button className="w-full border-[2px] rounded flex justify-around items-center py-2 mb-2">
+      <button className="w-full border-[2px] rounded flex justify-around items-center py-2 mb-2" onClick={handleGoogleLogin}>
         <img src={GoogleIcon} alt="" className="w-[40px]" />
         <h3 className="text-2xl">Google login</h3>
       </button>
