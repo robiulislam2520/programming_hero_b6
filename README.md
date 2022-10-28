@@ -7,23 +7,26 @@
 ## 3. Then coming mongodb and mongoose, it's easy to use and also easy our life. It's not time consuming its save our time.
 
 Initial code
+
+```js
 // External import
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
-        // Create a app
-        const app = express();
-        const port = process.env.PORT || 5000;
+// Create a app
+const app = express();
+const port = process.env.PORT || 5000;
 
-        // Middleware
-        app.use(cors());
+// Middleware
+app.use(cors());
 
-        // Routes
-        app.get('/health', (req, res) =>{
-            res.json({"message" : "Server health is good"})
-        })
+// Routes
+app.get("/health", (req, res) => {
+  res.json({ message: "Server health is good" });
+});
 
-        // App listen on http://localhost:500
-        app.listen(port, ()=>{
-            console.log("server is running on port" , port);
-        })
+// App listen on http://localhost:500
+app.listen(port, () => {
+  console.log("server is running on port", port);
+});
+```
