@@ -5,3 +5,25 @@
 ## 2. Node js and then coming a Node js Framework, Express js. It's also get easy to use and server side app.
 
 ## 3. Then coming mongodb and mongoose, it's easy to use and also easy our life. It's not time consuming its save our time.
+
+Initial code
+// External import
+const express = require('express');
+const cors = require('cors');
+
+        // Create a app
+        const app = express();
+        const port = process.env.PORT || 5000;
+
+        // Middleware
+        app.use(cors());
+
+        // Routes
+        app.get('/health', (req, res) =>{
+            res.json({"message" : "Server health is good"})
+        })
+
+        // App listen on http://localhost:500
+        app.listen(port, ()=>{
+            console.log("server is running on port" , port);
+        })
