@@ -1,1 +1,1 @@
-# Module 64 - client side
+# Simple CRUD Application Client side
