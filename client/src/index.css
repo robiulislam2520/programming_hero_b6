@@ -5,7 +5,67 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  background-color: #f4f0f1;
+}
+
+.App {
+  text-align: center;
+}
 
 a {
   text-decoration: none;
+}
+
+/* Header */
+.header {
+  background-color: #fff;
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+.header a {
+  margin: 0px 10px;
+  font-size: 18px;
+  color: black;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+input {
+  padding: 8px 10px;
+}
+
+.grid {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.grid div {
+  background-color: #fff;
+  padding: 20px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  ;
+}
+
+.grid div:hover {
+  background-color: lightblue;
+}
+
+.grid button {
+  background-color: red;
+  color: #fff;
+  border: none;
+  padding: 5px 20px;
+  margin-top: 20px;
+  cursor: pointer;
 }
