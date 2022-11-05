@@ -16,8 +16,12 @@ const SignUp = () => {
         .then(result => {
             const user = result.user;
             console.log(user);
+            alert('User added Successfully')
         })
         .catch(err => console.error(err));
+
+        // form reset
+        form.reset();
     }
 
     return (
