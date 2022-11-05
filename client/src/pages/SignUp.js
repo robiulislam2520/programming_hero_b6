@@ -6,10 +6,11 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { toast } from "react-hot-toast";
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const handleSignUp = (event) => {
     event.preventDefault();
     const form = event.target;
+    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
 
@@ -25,6 +26,8 @@ const SignUp = () => {
               fontSize: "24px"
             },
           })
+        // Update user profile
+        updateUserProfile(name)
       })
       .catch((err) => {
         toast.error(err);
@@ -72,7 +75,7 @@ const SignUp = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 placeholder="password"
                 className="input input-bordered"
