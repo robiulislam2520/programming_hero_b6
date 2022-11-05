@@ -1,12 +1,14 @@
 import React from "react";
 import { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import { toast } from "react-hot-toast";
 
 const Checkout = () => {
   const { title, description, price, _id } = useLoaderData();
   const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate()
 
   const handlePlaceOrder = (event) => {
     event.preventDefault();
@@ -24,6 +26,7 @@ const Checkout = () => {
       email,
       phone,
       message,
+      time: new Date().toLocaleString()
     };
     
 
@@ -46,6 +49,7 @@ const Checkout = () => {
             if(data.acknowledged){
                 toast.success('Order placed successfully')
                 form.reset();
+                navigate('/')
             }
         })
         .catch(er => {

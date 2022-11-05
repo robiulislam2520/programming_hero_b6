@@ -42,11 +42,26 @@ async function run(){
           res.send(service);
       });
 
-      // Orders api
+      // Orders post api
       app.post('/orders', async (req, res) => {
         const order = req.body;
         const result = await ordersCollection.insertOne(order);
         res.send(result);
+      });
+
+      // Orders get api by single user
+      app.get('/orders', async (req, res) => {
+        let query = {};
+
+        if (req.query.email) {
+            query = {
+                email: req.query.email
+            }
+        }
+
+        const cursor = ordersCollection.find(query);
+        const orders = await cursor.toArray();
+        res.send(orders);
       });
   }
   finally{

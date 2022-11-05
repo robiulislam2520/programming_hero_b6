@@ -4,6 +4,7 @@ import NotFound from "../pages/404Page";
 import Checkout from "../pages/Checkout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Orders from "../pages/Orders";
 import SignUp from "../pages/SignUp";
 
 const router = createBrowserRouter([
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <SignUp/>
+            },
+            {
+                path: '/orders',
+                element: <Orders/>
             },
             {
                 path: '/checkout/:id',
