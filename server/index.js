@@ -13,6 +13,7 @@ app.use(cors());
 app.get("/health", (req, res) => {
   res.json({ message: "Server health is good" });
 });
+
 app.get("/", (req, res) => {
   res.send("<h1>Node server is running</h1>");
 });
