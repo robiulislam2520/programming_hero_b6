@@ -1,1 +1,1 @@
-# Module 66 - Simple Genius Car work
+# Module 69 - JWT Token Learning and Auth
