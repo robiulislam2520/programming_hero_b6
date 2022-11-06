@@ -21,16 +21,31 @@ const Login = () => {
     login(email, password)
       .then((result) => {
         const user = result.user;
-        // console.log(user);
-        navigate(from , {replace: true})
-        toast.success('Login Success', {
-            style: {
-              borderRadius: '10px',
-              background: '#333',
-              color: '#fff',
-              fontSize: "24px"
+
+
+        // post the token
+        fetch('http://localhost:5000/jwt', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
             },
-          })
+            body: JSON.stringify({email: user.email})
+        })
+        .then(res => res.json())
+        .then(data => {
+            localStorage.setItem('genius-token', data.token);
+            // console.log(user);
+            navigate(from , {replace: true})
+            toast.success('Login Success', {
+                style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+                fontSize: "24px"
+                },
+            })
+            })
+        
       })
       .catch((err) => {
         toast.error(err);

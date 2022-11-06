@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const jwt = require('jsonwebtoken');
 
 //dot env file
 require('dotenv').config();
@@ -14,8 +15,34 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json())
 
-// database connection
 
+// Verify the user
+app.post('/jwt', (req, res)=>{
+  const user = req.body;
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN, {expiresIn: "1h"});
+  res.send({token})
+})
+
+function verifyJWT(req, res, next){
+    const header = req.headers.authorization;
+
+    if(!header){
+      return res.status(401).send({message: "Unauthorized User Access"})
+    }
+
+    const token = header.split(' ')[1];
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, function(err, decoded){
+        if(err){
+          return res.status(401).send({message: "Unauthorized User Access"})
+        }
+        req.decoded = decoded;
+        next()
+    })
+}
+
+
+// database connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster1.ftnnc4j.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -50,7 +77,7 @@ async function run(){
       });
 
       // Orders get api by single user
-      app.get('/orders', async (req, res) => {
+      app.get('/orders',verifyJWT, async (req, res) => {
         let query = {};
 
         if (req.query.email) {
@@ -91,6 +118,7 @@ async function run(){
   }
 }
 run().catch(err => console.dir(err))
+
 
 // Routes
 app.get("/health", (req, res) => {
