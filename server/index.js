@@ -13,6 +13,9 @@ app.use(cors());
 app.get("/health", (req, res) => {
   res.json({ message: "Server health is good" });
 });
+app.get("/", (req, res) => {
+  res.send("<h1>Volunteer Server is running</h1>");
+});
 
 // App listen on http://localhost:5000
 app.listen(port, () => {
