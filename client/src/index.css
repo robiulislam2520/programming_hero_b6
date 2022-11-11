@@ -17,9 +17,28 @@ ul li {
   list-style: none;
 }
 
-.hero {
-  background-image: url('./assets/images/bg.png');
+.hero_bg,
+.appointment_bg,
+.contact_bg {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+}
+
+.hero_bg {
+  background-image: url('./assets/images/bg.png');
+}
+
+.appointment_bg {
+  background-image: url('./assets/images/appointment.png');
+}
+
+.contact_bg {
+  background-image: url('./assets/images/appointment.png');
+}
+
+@media only screen and (max-width: 667px) {
+  .sm-p-4 {
+    padding: 0px 20px;
+  }
 }
