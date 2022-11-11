@@ -1,11 +1,14 @@
-import React from 'react'
+import useTitles from "../../hooks/useTitles";
+import Banner from "./Banner";
 
 const Home = () => {
+  // page title
+  useTitles('Home')
   return (
-    <div>
-        <h1>Home page</h1>
-    </div>
-  )
-}
+    <>
+      <Banner/>
+    </>
+  );
+};
 
-export default Home
+export default Home;

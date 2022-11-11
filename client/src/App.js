@@ -1,11 +1,17 @@
+import { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router-dom";
+import router from "./router/router";
+
 function App() {
   return (
     <>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    <button className="btn btn-warning">Warning</button>
-
+      <RouterProvider router={router} />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          className: "text-2xl",
+        }}
+      />
     </>
   );
 }
