@@ -42,3 +42,8 @@ ul li {
     padding: 0px 20px;
   }
 }
+
+.rdp-day_selected {
+  color: white;
+  background-color: #0000ff;
+}
