@@ -22,7 +22,7 @@ const Appointment = () => {
             Get Appointment
           </button>
         </div>
-        <img src={doctor} className="w-1/2 -mt-28 -mb-4" />
+        <img src={doctor} className="w-1/2 -mt-28 -mb-4" alt="" />
       </div>
     </div>
   );

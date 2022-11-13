@@ -21,7 +21,7 @@ const Experimental = () => {
             Get Started
           </button>
         </div>
-        <img src={treatment} className="w-1/2 rounded-lg" />
+        <img src={treatment} className="w-1/2 rounded-lg" alt="" />
       </div>
     </div>
   );
