@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
   const menuItem = (
     <React.Fragment>
       <li>
@@ -49,13 +52,29 @@ const Header = () => {
               {menuItem}
             </ul>
           </div>
-          <Link to='/' className="lg:text-2xl sm:text-lg font-bold text-white">Doctors Portal</Link>
+          <Link to="/" className="lg:text-2xl sm:text-lg font-bold text-white">
+            Doctors Portal
+          </Link>
         </div>
         <div className="navbar-center hidden text-white lg:flex">
           <ul className="menu menu-horizontal p-0">{menuItem}</ul>
         </div>
         <div className="navbar-end">
-          <Link to='/login' className="btn btn-secondary btn-md	">Login</Link>
+          {
+            user?.uid && <button 
+            className="btn btn-info btn-md	text-white btn-outline mr-2"
+            >{user?.displayName}</button>
+          }
+          {user?.email ? (
+            <button 
+            className="btn btn-error btn-md	text-white"
+            onClick={logOut}
+            >Log Out</button>
+          ) : (
+            <Link to="/login" className="btn btn-secondary btn-md	">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>

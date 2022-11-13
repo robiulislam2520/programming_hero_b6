@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 import useTitles from "../../hooks/useTitles";
 
 const Login = () => {
-  const { register, handleSubmit,reset } = useForm();
 
-  const handleLogin = data =>{
-    console.log(data)
+  const {login, setUser} = useContext(AuthContext)
+
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const handleLogin = (data) => {
+    
+
+    login(data.email, data.password)
+    .then(result => {
+      setUser(result.user);
+      toast.success("User Login Success")
+    })
+    .catch(err => toast.error(err.message))
+
+
+
+
     reset();
-  }
+  };
 
   // page title
   useTitles("Login");
@@ -25,8 +47,13 @@ const Login = () => {
             <input
               type="email"
               className="input input-bordered w-full max-w-xs"
-              {...register("email")}
+              {...register("email", { required: "Email Address is required" })}
             />
+            {errors.email && (
+              <p role="alert" className="text-red-500 mt-2">
+                {errors.email?.message}
+              </p>
+            )}
           </div>
           <div className="form-control w-full">
             <label className="label">
@@ -35,22 +62,42 @@ const Login = () => {
             <input
               type="password"
               className="input input-bordered w-full max-w-xs"
-              {...register("password")}
+              {...register("password", {
+                required: "Ki re vai, password den nah kno?",
+                minLength: {
+                  value: 6,
+                  message: "Password must be 6 character",
+                }
+              })}
             />
+            {errors.password && (
+              <p role="alert" className="text-red-500 mt-2">
+                {errors.password?.message}
+              </p>
+            )}
           </div>
-          <p className="underline text-base hover:no-underline cursor-pointer mt-3">Forgot Password?</p>
-          <input type="submit" className="btn btn-primary w-full mt-6" value="Login"/>
+          <p className="underline text-base hover:no-underline cursor-pointer mt-3">
+            Forgot Password?
+          </p>
+          <input
+            type="submit"
+            className="btn btn-primary w-full mt-6"
+            value="Login"
+          />
         </form>
         <div className="text-center my-6">
-          <p className="text-sm">New to Doctors Portal?{" "}
-          <Link to='/register' className="text-teal-400 underline">
-          Create new account
-          </Link>
+          <p className="text-sm">
+            New to Doctors Portal?{" "}
+            <Link to="/register" className="text-teal-400 underline">
+              Create new account
+            </Link>
           </p>
         </div>
         <div className="divider">OR</div>
         <div>
-        <button className="btn btn-outline btn-info uppercase w-full">Continue with google</button>
+          <button className="btn btn-outline btn-info uppercase w-full">
+            Continue with google
+          </button>
         </div>
       </div>
     </section>
