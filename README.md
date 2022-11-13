@@ -1,1 +1,1 @@
-# Module 72 - Doctors Portal Appointment page
+# Module 73 - Doctor Portal Auth
