@@ -6,9 +6,19 @@ import { AuthContext } from "../../context/AuthProvider";
 import useTitles from "../../hooks/useTitles";
 
 const SignUp = () => {
+  const { registerUser, setUser, updateUser, signInGoogle } =
+    useContext(AuthContext);
 
-  const {registerUser, setUser, updateUser} = useContext(AuthContext);
-
+  // handle google login
+  const handleGoogleLogin = () => {
+    signInGoogle()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Google Login Success");
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   const {
     register,
@@ -21,22 +31,21 @@ const SignUp = () => {
     console.log(data);
 
     registerUser(data.email, data.password)
-    .then(result =>{
-      const user = result.user;
-      setUser(user)
-      toast.success("User Create Success");
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("User Create Success");
 
-      // update user
-      updateUser(data.fullName)
-      .then(() => {
-        toast.success("User name Update");
+        // update user
+        updateUser(data.fullName)
+          .then(() => {
+            toast.success("User name Update");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
-      .catch(err => {
-        console.log(err)
-      })
-
-    })
-    .catch(err => toast.error(err.message))
+      .catch((err) => toast.error(err.message));
 
     reset();
   };
@@ -121,7 +130,10 @@ const SignUp = () => {
         <div className="divider">OR</div>
 
         <div>
-          <button className="btn btn-outline btn-info uppercase w-full">
+          <button
+            className="btn btn-outline btn-info uppercase w-full"
+            onClick={handleGoogleLogin}
+          >
             Continue with google
           </button>
         </div>

@@ -10,42 +10,47 @@ import SignUp from "../pages/Register/SignUp";
 import PrivateRoutes from "./PrivateRoute";
 
 const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <Main/>,
-        children: [
-            {
-                path: '/',
-                element: <Home/>
-            },
-            {
-                path: '/appointment',
-                element: <Appointment/>
-            },
-            {
-                path: '/login',
-                element: <Login/>
-            },
-            {
-                path: '/register',
-                element: <SignUp/>
-            },
-            {
-                path: '*',
-                element: <NotFound/>
-            },
-        ]
-    },
-    {
+  {
+    path: "/",
+    element: <Main />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/appointment",
+        element: <Appointment />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <SignUp />,
+      },
+
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
         path: "/dashboard",
-        element: <DashboardLayout/>,
-        children: [
-            {
-                path: "/dashboard",
-                element: <PrivateRoutes><Dashboard/></PrivateRoutes>
-            }
-        ]
-    }
-])
+        element: (
+          <PrivateRoutes>
+            <Dashboard />
+          </PrivateRoutes>
+        ),
+      },
+    ],
+  },
+]);
 
 export default router;

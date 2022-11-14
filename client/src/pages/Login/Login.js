@@ -1,14 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useTitles from "../../hooks/useTitles";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 const Login = () => {
 
-  const {login, setUser} = useContext(AuthContext)
+  const [passwordType, setPasswordType] = useState(true)
 
+  const { login, setUser, signInGoogle } = useContext(AuthContext);
+
+  // handle google login
+  const handleGoogleLogin = () => {
+    signInGoogle()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Google Login Success");
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   const {
     register,
@@ -18,89 +31,101 @@ const Login = () => {
   } = useForm();
 
   const handleLogin = (data) => {
-    
-
     login(data.email, data.password)
-    .then(result => {
-      setUser(result.user);
-      toast.success("User Login Success")
-    })
-    .catch(err => toast.error(err.message))
+      .then((result) => {
+        setUser(result.user);
+        toast.success("User Login Success");
+      })
+      .catch((err) => toast.error(err.message));
 
-
-
-
+    // reset a from
     reset();
   };
+
 
   // page title
   useTitles("Login");
   return (
-    <section className="login w-96 h-full justify-center items-center py-20 mx-auto">
-      <div className="bg-white rounded-lg shadow-2xl p-8">
-        <h2 className="text-2xl text-center mb-4 font-bold">Login</h2>
-        <form onSubmit={handleSubmit(handleLogin)}>
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text">Email</span>
-            </label>
-            <input
-              type="email"
-              className="input input-bordered w-full max-w-xs"
-              {...register("email", { required: "Email Address is required" })}
-            />
-            {errors.email && (
-              <p role="alert" className="text-red-500 mt-2">
-                {errors.email?.message}
+    <>
+      <section className="login w-96 h-full justify-center items-center py-20 mx-auto">
+        <div className="bg-white rounded-lg shadow-2xl p-8">
+          <h2 className="text-2xl text-center mb-4 font-bold">Login</h2>
+          <form onSubmit={handleSubmit(handleLogin)}>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                onChange={e => console.log(e.target.value)}
+                className="input input-bordered w-full max-w-xs"
+                {...register("email", {
+                  required: "Email Address is required",
+                })}
+              />
+              {errors.email && (
+                <p role="alert" className="text-red-500 mt-2">
+                  {errors.email?.message}
+                </p>
+              )}
+            </div>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Password</span>
+                <span className="label-text cursor-pointer font-bold" onClick={() => setPasswordType(!passwordType)}>{passwordType ? "Show" : "Hide"}</span>
+              </label>
+              <input
+                type={passwordType ? "password" : "text"}
+                className="input input-bordered w-full max-w-xs"
+                {...register("password", {
+                  required: "Ki re vai, password den nah kno?",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be 6 character",
+                  },
+                })}
+              />
+              {errors.password && (
+                <p role="alert" className="text-red-500 mt-2">
+                  {errors.password?.message}
+                </p>
+              )}
+            </div>
+            {/* Forgot password modal */}
+            <label htmlFor="forgotPasswordModal">
+              <p className="underline text-base hover:no-underline cursor-pointer mt-3">
+                Forgot Password?
               </p>
-            )}
-          </div>
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text">Password</span>
             </label>
+
             <input
-              type="password"
-              className="input input-bordered w-full max-w-xs"
-              {...register("password", {
-                required: "Ki re vai, password den nah kno?",
-                minLength: {
-                  value: 6,
-                  message: "Password must be 6 character",
-                }
-              })}
+              type="submit"
+              className="btn btn-primary w-full mt-6"
+              value="Login"
             />
-            {errors.password && (
-              <p role="alert" className="text-red-500 mt-2">
-                {errors.password?.message}
-              </p>
-            )}
+          </form>
+          <div className="text-center my-6">
+            <p className="text-sm">
+              New to Doctors Portal?{" "}
+              <Link to="/register" className="text-teal-400 underline">
+                Create new account
+              </Link>
+            </p>
           </div>
-          <p className="underline text-base hover:no-underline cursor-pointer mt-3">
-            Forgot Password?
-          </p>
-          <input
-            type="submit"
-            className="btn btn-primary w-full mt-6"
-            value="Login"
-          />
-        </form>
-        <div className="text-center my-6">
-          <p className="text-sm">
-            New to Doctors Portal?{" "}
-            <Link to="/register" className="text-teal-400 underline">
-              Create new account
-            </Link>
-          </p>
+          <div className="divider">OR</div>
+          <div>
+            <button
+              className="btn btn-outline btn-info uppercase w-full"
+              onClick={handleGoogleLogin}
+            >
+              Continue with google
+            </button>
+          </div>
         </div>
-        <div className="divider">OR</div>
-        <div>
-          <button className="btn btn-outline btn-info uppercase w-full">
-            Continue with google
-          </button>
-        </div>
-      </div>
-    </section>
+      </section>
+
+      <ForgotPasswordModal/>
+    </>
   );
 };
 
