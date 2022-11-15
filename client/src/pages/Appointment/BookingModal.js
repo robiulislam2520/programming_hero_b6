@@ -1,9 +1,11 @@
 import { format } from "date-fns";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
+import { postBookings } from "../../utils/my_api";
 
-const BookingModal = ({ treatment, setTreatment, selected }) => {
 
+
+const BookingModal = ({ treatment, setTreatment, selected, refetch }) => {
 
   const {user} = useContext(AuthContext);
 
@@ -25,13 +27,14 @@ const BookingModal = ({ treatment, setTreatment, selected }) => {
       slot,
       email,
       phone,
+      bookingTime: format(new Date(), "PP")
     };
 
-    // TODO: send data to the server
-    // and once data is saved then close the modal
-    // and display success toast
-    console.log(booking);
+    // POST booking in server
+    postBookings(booking, refetch);
+    // Close the popup
     setTreatment(null);
+
   };
 
   return (
@@ -83,6 +86,7 @@ const BookingModal = ({ treatment, setTreatment, selected }) => {
               name="phone"
               type="text"
               placeholder="Phone Number"
+              required
               className="input w-full input-bordered"
             />
             <br />

@@ -1,24 +1,16 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import Header from "../components/Header";
+import Sidebar from "./Sidebar";
 
 const DashboardLayout = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto">
-        <div className="flex justify-between gap-5">
-          <div className="shadow h-screen bg-gray-300">
-            <div className="drawer-side">
-              <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-              <ul className="menu p-4 w-80text-base-content">
-                <li>
-                  <Link href="/dashboard">Dashboard</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="grow">
+      <div >
+        <div className="flex justify-between">
+          <Sidebar/>
+          <div className="grow py-6 px-8 bg-[#F1F5F9]">
             <Outlet />
           </div>
         </div>

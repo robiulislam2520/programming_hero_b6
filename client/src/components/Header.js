@@ -22,6 +22,11 @@ const Header = () => {
       <li>
         <Link to="/contact">Contact</Link>
       </li>
+      {
+        user && <li>
+        <Link to="/dashboard">Dashboard</Link>
+      </li>
+      }
     </React.Fragment>
   );
   return (

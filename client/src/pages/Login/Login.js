@@ -1,16 +1,20 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useTitles from "../../hooks/useTitles";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 
 const Login = () => {
+  const [passwordType, setPasswordType] = useState(true);
 
-  const [passwordType, setPasswordType] = useState(true)
+  const { login, setUser, signInGoogle, loading } = useContext(AuthContext);
 
-  const { login, setUser, signInGoogle } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || '/';
 
   // handle google login
   const handleGoogleLogin = () => {
@@ -19,6 +23,7 @@ const Login = () => {
         const user = result.user;
         setUser(user);
         toast.success("Google Login Success");
+        navigate(from , {replace: true});
       })
       .catch((err) => toast.error(err.message));
   };
@@ -35,13 +40,13 @@ const Login = () => {
       .then((result) => {
         setUser(result.user);
         toast.success("User Login Success");
+        navigate(from , {replace: true});
       })
       .catch((err) => toast.error(err.message));
 
     // reset a from
     reset();
   };
-
 
   // page title
   useTitles("Login");
@@ -57,7 +62,7 @@ const Login = () => {
               </label>
               <input
                 type="email"
-                onChange={e => console.log(e.target.value)}
+                onChange={(e) => console.log(e.target.value)}
                 className="input input-bordered w-full max-w-xs"
                 {...register("email", {
                   required: "Email Address is required",
@@ -72,7 +77,12 @@ const Login = () => {
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Password</span>
-                <span className="label-text cursor-pointer font-bold" onClick={() => setPasswordType(!passwordType)}>{passwordType ? "Show" : "Hide"}</span>
+                <span
+                  className="label-text cursor-pointer font-bold"
+                  onClick={() => setPasswordType(!passwordType)}
+                >
+                  {passwordType ? "Show" : "Hide"}
+                </span>
               </label>
               <input
                 type={passwordType ? "password" : "text"}
@@ -101,7 +111,11 @@ const Login = () => {
             <input
               type="submit"
               className="btn btn-primary w-full mt-6"
-              value="Login"
+              value={`${
+                loading ? "Loading....": (
+                  "Login"
+                )
+              }`}
             />
           </form>
           <div className="text-center my-6">
@@ -124,7 +138,7 @@ const Login = () => {
         </div>
       </section>
 
-      <ForgotPasswordModal/>
+      <ForgotPasswordModal />
     </>
   );
 };

@@ -1,13 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useTitles from "../../hooks/useTitles";
 
 const SignUp = () => {
+  const [passwordType, setPasswordType] = useState(true);
   const { registerUser, setUser, updateUser, signInGoogle } =
     useContext(AuthContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/";
 
   // handle google login
   const handleGoogleLogin = () => {
@@ -16,6 +22,7 @@ const SignUp = () => {
         const user = result.user;
         setUser(user);
         toast.success("Google Login Success");
+        navigate(from, { replace: true });
       })
       .catch((err) => toast.error(err.message));
   };
@@ -40,6 +47,7 @@ const SignUp = () => {
         updateUser(data.fullName)
           .then(() => {
             toast.success("User name Update");
+            navigate(from, { replace: true });
           })
           .catch((err) => {
             console.log(err);
@@ -90,9 +98,15 @@ const SignUp = () => {
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Password</span>
+              <span
+                className="label-text cursor-pointer font-bold"
+                onClick={() => setPasswordType(!passwordType)}
+              >
+                {passwordType ? "Show" : "Hide"}
+              </span>
             </label>
             <input
-              type="password"
+              type={passwordType ? "password" : "text"}
               className="input input-bordered w-full max-w-xs"
               {...register("password", {
                 required: "Ki re vai, password den nah kno?",
