@@ -12,7 +12,11 @@ const MyAppointmentTable = () => {
     queryFn: async () => {
       const res = await fetch(
         `http://localhost:5000/bookings?email=${user?.email}`
-      );
+      , {
+        headers: {
+          authorization: `bearer ${localStorage.getItem('doctorsPortalToken')}`
+        }
+      });
       const data = await res.json();
       return data;
     },
@@ -39,7 +43,6 @@ const MyAppointmentTable = () => {
     }
   };
 
-  // Calculate time
 
   return (
     <div className="overflow-x-auto mt-8">

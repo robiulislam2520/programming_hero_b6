@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+var jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // Create a app
@@ -20,6 +21,19 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
+
+// jwt verify token
+function verifyJWT(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).send({ message: "Unauthorized user" });
+  }
+  const token = authHeader.split(" ")[1];
+
+  console.log(token)
+
+  next();
+}
 
 async function run() {
   try {
@@ -50,18 +64,18 @@ async function run() {
     });
 
     // get bookings
-    app.get("/bookings", async (req, res) => {
-      let query = {};
+    app.get('/bookings', verifyJWT, async (req, res) => {
+      const email = req.query.email;
+      // const decodedEmail = req.decoded.email;
 
-      if (req.query.email) {
-        query = {
-          email: req.query.email,
-        };
-      }
+      // if (email !== decodedEmail) {
+      //     return res.status(403).send({ message: 'forbidden access' });
+      // }
 
-      const result = await bookingCollection.find(query).toArray();
-      res.send(result);
-    });
+      const query = { email: email };
+      const bookings = await bookingCollection.find(query).toArray();
+      res.send(bookings);
+  })
 
     // post bookings
     app.post("/bookings", async (req, res) => {
@@ -90,20 +104,28 @@ async function run() {
       res.send(result);
     });
 
-    // Users Routes
-    app.get("/users", async (req, res) => {
-      const query = {};
-      const users = await usersCollection.find(query).toArray();
-      res.send(users);
+    // JWT Token generate
+
+    app.get("/jwt", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      const user = await usersCollection.findOne(query);
+      if (user) {
+        const token = jwt.sign({ email }, process.env.JWT_ACCESS_TOKEN, {
+          expiresIn: "1h",
+        });
+        return res.send({ accessToken: token });
+      }
+      res.status(403).send({ accessToken: "" });
     });
-    
-    app.post('/users', async (req, res) => {
+
+    // Users Routes
+    app.post("/users", async (req, res) => {
       const user = req.body;
       console.log(user);
       const result = await usersCollection.insertOne(user);
       res.send(result);
-  });
-
+    });
   } finally {
   }
 }
