@@ -7,7 +7,7 @@ import useTitles from "../../hooks/useTitles";
 
 const SignUp = () => {
   const [passwordType, setPasswordType] = useState(true);
-  const { registerUser, setUser, updateUser, signInGoogle } =
+  const { registerUser, setUser, updateUser, signInGoogle, loading } =
     useContext(AuthContext);
 
   const location = useLocation();
@@ -47,7 +47,7 @@ const SignUp = () => {
         updateUser(data.fullName)
           .then(() => {
             toast.success("User name Update");
-            navigate(from, { replace: true });
+            saveUser(data.fullName, data.email)
           })
           .catch((err) => {
             console.log(err);
@@ -57,6 +57,24 @@ const SignUp = () => {
 
     reset();
   };
+
+  const saveUser = (name, email) =>{
+    const user ={name, email};
+    fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(data =>{
+        console.log(data)
+        navigate(from, { replace: true });
+    })
+}
+
+
 
   // page title
   useTitles("Register");
@@ -130,7 +148,7 @@ const SignUp = () => {
           <input
             type="submit"
             className="btn btn-primary w-full mt-6"
-            value="Sign Up"
+            value={loading ? "Loading..." :"Sign Up"}
           />
         </form>
         <div className="text-center my-6">

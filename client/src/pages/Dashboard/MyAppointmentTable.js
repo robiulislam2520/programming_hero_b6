@@ -50,7 +50,7 @@ const MyAppointmentTable = () => {
             <th>Name</th>
             <th>Service</th>
             <th>Time</th>
-            <th>Due Time</th>
+            <th>Date</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -61,28 +61,7 @@ const MyAppointmentTable = () => {
               <td>{user?.displayName}</td>
               <td>{service.treatment}</td>
               <td>{service.slot}</td>
-              <td>
-                {/* Calculate the due date
-                    if(date === 0){
-                        toady
-                    } else if(date === 1){
-                        24h
-                    } else{
-                        more days (2 days)
-                    }
-                */}
-                {new Date(service.appointmentDate).getDate() -
-                  new Date(service.bookingTime).getDate() ===
-                0
-                  ? " Today"
-                  : new Date(service.appointmentDate).getDate() -
-                      new Date(service.bookingTime).getDate() ===
-                    1
-                  ? " 24h"
-                  : new Date(service.appointmentDate).getDate() -
-                    new Date(service.bookingTime).getDate() +
-                    " Days"}
-              </td>
+              <td>{service.appointmentDate}</td>
               <td className="flex items-center gap-3">
                 <p className="text-blue-500 underline cursor-pointer text-lg font-semibold">
                   Edit

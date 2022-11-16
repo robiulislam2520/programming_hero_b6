@@ -26,6 +26,7 @@ async function run() {
     const database = client.db("doctorsPortal");
     const appointmentCollection = database.collection("appointmentCollections");
     const bookingCollection = database.collection("bookingsCollection");
+    const usersCollection = database.collection("users");
 
     // get all appointments
     app.get("/appointments", async (req, res) => {
@@ -62,7 +63,6 @@ async function run() {
       res.send(result);
     });
 
-
     // post bookings
     app.post("/bookings", async (req, res) => {
       const booking = req.body;
@@ -83,12 +83,27 @@ async function run() {
     });
 
     // delete a appointment
-    app.delete('/bookings/:id', async(req, res)=>{
+    app.delete("/bookings/:id", async (req, res) => {
       const id = req.params.id;
-      const query = {_id: ObjectId(id)}
+      const query = { _id: ObjectId(id) };
       const result = await bookingCollection.deleteOne(query);
       res.send(result);
-    })
+    });
+
+    // Users Routes
+    app.get("/users", async (req, res) => {
+      const query = {};
+      const users = await usersCollection.find(query).toArray();
+      res.send(users);
+    });
+    
+    app.post('/users', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+  });
+
   } finally {
   }
 }
