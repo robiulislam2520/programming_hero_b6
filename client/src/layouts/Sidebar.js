@@ -17,7 +17,7 @@ const Sidebar = () => {
           {!isAdmin && (
             <>
               <li>
-              <Link to="/dashboard/my-appointments">My Appointments</Link>
+                <Link to="/dashboard/my-appointments">My Appointments</Link>
               </li>
             </>
           )}
@@ -25,6 +25,12 @@ const Sidebar = () => {
             <>
               <li>
                 <Link to="/dashboard/allusers">All users</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/adddoctor">Add a doctor</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/managedoctors">Manage Doctor doctor</Link>
               </li>
             </>
           )}
