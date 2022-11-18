@@ -7,16 +7,16 @@ import toast from "react-hot-toast";
 const MyAppointmentTable = () => {
   const { user } = useContext(AuthContext);
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data = [], isLoading, refetch } = useQuery({
     queryKey: ["my-appointment", user?.email],
     queryFn: async () => {
       const res = await fetch(
         `http://localhost:5000/bookings?email=${user?.email}`
-      , {
+      ,  {
         headers: {
-          authorization: `bearer ${localStorage.getItem('doctorsPortalToken')}`
+           authorization: `bearer ${localStorage.getItem('accessToken')}` 
         }
-      });
+    });
       const data = await res.json();
       return data;
     },

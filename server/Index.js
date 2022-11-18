@@ -29,10 +29,15 @@ function verifyJWT(req, res, next) {
     return res.status(401).send({ message: "Unauthorized user" });
   }
   const token = authHeader.split(" ")[1];
+  console.log(token);
 
-  console.log(token)
-
-  next();
+  jwt.verify(token, process.env.ACCESS_TOKEN, function (err, decoded) {
+    if (err) {
+      return res.status(403).send({ message: "forbidden access" });
+    }
+    req.decoded = decoded;
+    next();
+  });
 }
 
 async function run() {
@@ -64,18 +69,13 @@ async function run() {
     });
 
     // get bookings
-    app.get('/bookings', verifyJWT, async (req, res) => {
+    app.get("/bookings", async (req, res) => {
       const email = req.query.email;
-      // const decodedEmail = req.decoded.email;
-
-      // if (email !== decodedEmail) {
-      //     return res.status(403).send({ message: 'forbidden access' });
-      // }
 
       const query = { email: email };
       const bookings = await bookingCollection.find(query).toArray();
       res.send(bookings);
-  })
+    });
 
     // post bookings
     app.post("/bookings", async (req, res) => {
@@ -120,10 +120,46 @@ async function run() {
     });
 
     // Users Routes
+    app.get("/users", async (req, res) => {
+      const query = {};
+      const users = await usersCollection.find(query).toArray();
+      res.send(users);
+    });
+
     app.post("/users", async (req, res) => {
       const user = req.body;
-      console.log(user);
       const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    app.get("/users/admin/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await usersCollection.findOne(query);
+      res.send({ isAdmin: user?.role === "admin" });
+    });
+    app.put("/users/admin/:id", verifyJWT, async (req, res) => {
+      const decodedEmail = req.decoded.email;
+      const query = { email: decodedEmail };
+      const user = await usersCollection.findOne(query);
+
+      if (user?.role !== "admin") {
+        return res.status(403).send({ message: "forbidden access" });
+      }
+
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          role: "admin",
+        },
+      };
+      const result = await usersCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
       res.send(result);
     });
   } finally {

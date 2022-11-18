@@ -4,11 +4,18 @@ import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useTitles from "../../hooks/useTitles";
+import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
   const [passwordType, setPasswordType] = useState(true);
   const { registerUser, setUser, updateUser, signInGoogle, loading } =
     useContext(AuthContext);
+
+  const [createdUserEmail, setCreatedUserEmail] = useState('')
+
+  const [token] = useToken(createdUserEmail);
+
+  console.log(token)
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,21 +77,12 @@ const SignUp = () => {
     .then(res => res.json())
     .then(data =>{
         console.log(data)
-        getUserToken(email)
+        setCreatedUserEmail(email)
     })
 }
 
 
-  const getUserToken = email =>{
-    fetch(`http://localhost:5000/jwt?email=${email}`)
-    .then(res => res.json())
-    .then(data => {
-      if(data.accessToken){
-        localStorage.setItem('doctorsPortalToken', data.accessToken)
-        navigate(from, { replace: true });
-      }
-    })
-  }
+
 
 
 
