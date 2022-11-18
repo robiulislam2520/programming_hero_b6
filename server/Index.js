@@ -138,14 +138,14 @@ async function run() {
       const user = await usersCollection.findOne(query);
       res.send({ isAdmin: user?.role === "admin" });
     });
-    app.put("/users/admin/:id", verifyJWT, async (req, res) => {
-      const decodedEmail = req.decoded.email;
-      const query = { email: decodedEmail };
-      const user = await usersCollection.findOne(query);
+    app.put("/users/admin/:id", async (req, res) => {
+      // const decodedEmail = req.decoded.email;
+      // const query = { email: decodedEmail };
+      // const user = await usersCollection.findOne(query);
 
-      if (user?.role !== "admin") {
-        return res.status(403).send({ message: "forbidden access" });
-      }
+      // if (user?.role !== "admin") {
+      //   return res.status(403).send({ message: "forbidden access" });
+      // }
 
       const id = req.params.id;
       const filter = { _id: ObjectId(id) };

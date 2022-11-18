@@ -2,12 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Main from "../layouts/Main";
 import Appointment from "../pages/Appointment/Appointment";
+import AllUsers from "../pages/Dashboard/AllUsers";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MyAppointment from "../pages/Dashboard/MyAppointment";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import NotFound from "../pages/NotFound/NotFound";
 import SignUp from "../pages/Register/SignUp";
+import AdminRoute from "./AdminRoute";
 import PrivateRoutes from "./PrivateRoute";
 
 const router = createBrowserRouter([
@@ -40,7 +42,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <PrivateRoutes><DashboardLayout /></PrivateRoutes>,
+    element: (
+      <PrivateRoutes>
+        <DashboardLayout />
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: "/dashboard",
@@ -49,6 +55,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-appointments",
         element: <MyAppointment />,
+      },
+      {
+        path: "/dashboard/allusers",
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
     ],
   },

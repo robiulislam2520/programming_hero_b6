@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
+import useAdmin from "../hooks/useAdmin";
 
 const Sidebar = () => {
+  const { user } = useContext(AuthContext);
+  const [isAdmin] = useAdmin(user?.email);
   return (
     <div className="shadow h-screen bg-slate-800 text-white">
       <div className="drawer-side">
@@ -10,9 +14,20 @@ const Sidebar = () => {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li>
-            <Link to="/dashboard/my-appointments">My Appointments</Link>
-          </li>
+          {!isAdmin && (
+            <>
+              <li>
+              <Link to="/dashboard/my-appointments">My Appointments</Link>
+              </li>
+            </>
+          )}
+          {isAdmin && (
+            <>
+              <li>
+                <Link to="/dashboard/allusers">All users</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
